@@ -1,6 +1,7 @@
 import { createContext, useState, useContext } from "react";
 import Api from "../../api";
 import { Ichildrentype } from "../../interface";
+import { useAuth } from "../authtoken";
 
 interface Contact {
   id: string;
@@ -29,23 +30,29 @@ export const ContactsContext = createContext<ContactsProviderData>(
 
 export const ContactsProvider = ({ children }: Ichildrentype) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
-
+  const { auth } = useAuth();
   const addContacts = (contact: Contact) => setContacts([contact, ...contacts]);
 
   const getContacts = () => {
-    Api.get(`contact`).then((res) => {
-      setContacts(res.data);
-    });
+    Api.get(`contact/`, { headers: { Authorization: `Bearer ${auth}` } }).then(
+      (res) => {
+        setContacts(res.data);
+      }
+    );
   };
 
   const updateContacts = (id: string, newData: ContactPatial) => {
-    Api.patch(`contact/${id}`, newData).then((res) => {
+    Api.patch(`contact/${id}`, newData, {
+      headers: { Authorization: `Bearer ${auth}` },
+    }).then((res) => {
       getContacts();
     });
   };
 
   const deleteContacts = (id: string) => {
-    Api.delete(`contact/${id}`).then((res) => {
+    Api.delete(`contact/${id}`, {
+      headers: { Authorization: `Bearer ${auth}` },
+    }).then((res) => {
       getContacts();
     });
   };

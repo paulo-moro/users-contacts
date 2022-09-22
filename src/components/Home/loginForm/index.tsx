@@ -5,10 +5,12 @@ import { useHistory } from "react-router-dom";
 import { useModal } from "../../../providers/modal";
 import Api from "../../../api";
 import { useAuth } from "../../../providers/authtoken";
+import { useModalType } from "../../../providers/modalType";
 
 function LoginForm() {
-  const { changeModal } = useModal();
+  const { changeModal, modal } = useModal();
   const { changeAuth, auth } = useAuth();
+  const { changeModalType, modalType } = useModalType();
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -63,20 +65,30 @@ function LoginForm() {
     <>
       <form onSubmit={handleSubmit(handleLogin)}>
         <input type="email" placeholder="E-mail" {...register("email")} />
-        <span>{String(errors.email?.message)}</span>
+        {errors.email && <span>{String(errors.email?.message)}</span>}
         <input
           type="password"
           placeholder="Password"
           required
           {...register("password")}
         />
-        <span>{String(errors.password?.message)}</span>
+        {errors.email && <span>{String(errors.password?.message)}</span>}
         <button type="submit">Login</button>
-        <p>
-          You do not have an account? click{" "}
-          <span onClick={changeModal}>here</span>
-        </p>
       </form>
+      <p>
+        You do not have an account? click{" "}
+        <span
+          onClick={() => {
+            console.log(modal);
+            console.log(modalType);
+            console.log(changeModalType);
+            changeModal();
+            changeModalType("register");
+          }}
+        >
+          here
+        </span>
+      </p>
     </>
   );
 }

@@ -1,8 +1,11 @@
 import { createContext, useState, useContext } from "react";
+import Api from "../../api";
 import { Ichildrentype } from "../../interface";
+import { useAuth } from "../authtoken";
 
 interface User {
   id: string;
+  name: string;
   email: string;
   phone: string;
 }
@@ -10,6 +13,7 @@ interface User {
 interface UserProviderData {
   user: User;
   changeUser: (newUser: User) => void;
+  getUser: () => void;
 }
 
 export const userContext = createContext<UserProviderData>(
@@ -17,12 +21,24 @@ export const userContext = createContext<UserProviderData>(
 );
 
 export const UserProvider = ({ children }: Ichildrentype) => {
-  const [user, setUser] = useState<User>({ id: "", email: "", phone: "" });
+  const [user, setUser] = useState<User>({
+    id: "",
+    name: "",
+    email: "",
+    phone: "",
+  });
+  const { auth } = useAuth();
 
   const changeUser = (newUser: User) => setUser({ ...user, ...newUser });
-
+  const getUser = () => {
+    Api.get("/users", { headers: { Authorization: `Bearer ${auth}` } }).then(
+      (res) => {
+        changeUser(res.data);
+      }
+    );
+  };
   return (
-    <userContext.Provider value={{ changeUser, user }}>
+    <userContext.Provider value={{ changeUser, user, getUser }}>
       {children}
     </userContext.Provider>
   );
