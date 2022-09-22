@@ -10,8 +10,8 @@ export const ContactTypeContext = createContext<ContactProviderData>(
   {} as ContactProviderData
 );
 
-export const ContactProvider = ({ children }: Ichildrentype) => {
-  const [contactType, setcontactType] = useState("");
+export const ContactTypeProvider = ({ children }: Ichildrentype) => {
+  const [contactType, setcontactType] = useState<string>("");
 
   const changeContact = (type: string) => setcontactType(type);
 
@@ -22,7 +22,7 @@ export const ContactProvider = ({ children }: Ichildrentype) => {
   );
 };
 
-export const useContact = () => {
+export const useContactType = () => {
   const context = useContext(ContactTypeContext);
   return context;
 };

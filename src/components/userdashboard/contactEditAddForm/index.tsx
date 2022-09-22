@@ -1,13 +1,17 @@
-import { IcontactType } from "../../../interface";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
+import { useContacts } from "../../../providers/contacts";
+import { useEditContact } from "../../../providers/editcontact";
+import { useModal } from "../../../providers/modal";
 
-interface ContactFormProps {
-  contact?: IcontactType;
-}
+function ContactEditForm() {
+  const { updateContacts } = useContacts();
 
-function ContactEditForm({ contact }: ContactFormProps) {
+  const { changeModal } = useModal();
+
+  const { contact } = useEditContact();
+
   const schema = yup.object().shape({
     name: yup
       .string()
@@ -19,6 +23,7 @@ function ContactEditForm({ contact }: ContactFormProps) {
     email: yup.string().email("Email não é válido"),
     phone: yup.string().min(11, "Número de telefone inválido"),
   });
+
   const {
     register,
     handleSubmit,
@@ -26,8 +31,31 @@ function ContactEditForm({ contact }: ContactFormProps) {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const updateContact = (newData: FieldValues) => {
+    const errorsIsEmpty = () => {
+      for (let key in errors) {
+        if (errors.hasOwnProperty(key)) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    };
+
+    if (errorsIsEmpty()) {
+      updateContacts(contact!.id, newData);
+      changeModal();
+    }
+  };
+
+  const deleteContact = (contactId: string) => {
+    deleteContact(contactId);
+    changeModal();
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(updateContact)}>
       <input
         type="text"
         placeholder="Complete name"
@@ -49,7 +77,9 @@ function ContactEditForm({ contact }: ContactFormProps) {
         {...register("email")}
         value={contact?.email}
       />
-      <button type="submit">Delete</button>
+      <button type="button" onClick={() => deleteContact(contact!.id)}>
+        Delete
+      </button>
       <button type="submit">Save</button>
     </form>
   );

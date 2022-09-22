@@ -5,6 +5,7 @@ export interface Ichildrentype {
 }
 
 export interface IcontactType {
+  id: string;
   name: string;
   phone: string;
   email: string;

@@ -1,8 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
+import Api from "../../../api";
+import { useAuth } from "../../../providers/authtoken";
+import { useContacts } from "../../../providers/contacts";
 
 function ContactAddForm() {
+  const { addContacts } = useContacts();
+  const { auth } = useAuth();
+
   const schema = yup.object().shape({
     name: yup
       .string()
@@ -29,9 +35,35 @@ function ContactAddForm() {
     resolver: yupResolver(schema),
   });
 
+  const addContact = ({ email, password, phone }: FieldValues) => {
+    const errorsIsEmpty = () => {
+      for (let key in errors) {
+        if (errors.hasOwnProperty(key)) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    };
+
+    if (errorsIsEmpty()) {
+      Api.post(
+        "/contact",
+        { email, password, phone },
+        {
+          headers: { Authorization: `Bearer ${auth}` },
+        }
+      )
+        .then((res) => {
+          addContacts(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit(addContact)}>
         <input
           type="text"
           placeholder="Complete name"
