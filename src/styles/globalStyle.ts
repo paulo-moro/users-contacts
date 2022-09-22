@@ -1,5 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
-
+import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
 
@@ -14,6 +13,10 @@ export default createGlobalStyle`
     --brown1: #9e906e;
     --purple1: #9684a3;
     --purple2:#8870ff;
+}
+
+body{
+	background-color: var(--gray1);
 }
 
 html, body, div, span, applet, object, iframe,
@@ -59,4 +62,4 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-`
+`;
