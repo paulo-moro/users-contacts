@@ -2,6 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useModal } from "../../../providers/modal";
+import { StyledButton } from "../../../styles/Button/style";
+import { StyledInput } from "../../../styles/Input/styles";
 
 function RegisterForm() {
   const { changeModal } = useModal();
@@ -62,19 +64,19 @@ function RegisterForm() {
   return (
     <>
       <form onSubmit={handleSubmit(handleRegister)}>
-        <input type="text" placeholder="Name" {...register("name")} />
+        <StyledInput type="text" placeholder="Name" {...register("name")} />
         {errors.name && <span>{String(errors.name?.message)}</span>}
-        <input type="text" placeholder="E-mail" {...register("email")} />
+        <StyledInput type="text" placeholder="E-mail" {...register("email")} />
         {errors.email && <span>{String(errors.email?.message)}</span>}
-        <input type="text" placeholder="Phone" {...register("phone")} />
+        <StyledInput type="text" placeholder="Phone" {...register("phone")} />
         {errors.phone && <span>{String(errors.phone?.message)}</span>}
-        <input
+        <StyledInput
           type="password"
           placeholder="Password"
           {...register("password")}
         />
         {errors.password && <span>{String(errors.password?.message)}</span>}
-        <input
+        <StyledInput
           type="password"
           placeholder="Confirm password"
           {...register("confirmpassword")}
@@ -82,7 +84,7 @@ function RegisterForm() {
         {errors.confirmPassword && (
           <span>{String(errors.confirmPassword?.message)}</span>
         )}
-        <button type="submit">Register</button>
+        <StyledButton type="submit">Register</StyledButton>
       </form>
     </>
   );

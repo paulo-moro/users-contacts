@@ -34,11 +34,11 @@ export const ContactsProvider = ({ children }: Ichildrentype) => {
   const addContacts = (contact: Contact) => setContacts([contact, ...contacts]);
 
   const getContacts = () => {
-    Api.get(`contact/`, { headers: { Authorization: `Bearer ${auth}` } }).then(
-      (res) => {
+    Api.get(`contact/`, { headers: { Authorization: `Bearer ${auth}` } })
+      .then((res) => {
         setContacts(res.data);
-      }
-    );
+      })
+      .catch((err) => console.log(err));
   };
 
   const updateContacts = (id: string, newData: ContactPatial) => {

@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 :root{
     --black0: #000000;
     --black1: #3a3132;
@@ -13,6 +13,7 @@ export default createGlobalStyle`
     --brown1: #9e906e;
     --purple1: #9684a3;
     --purple2:#8870ff;
+	--white:#FFFFFF
 }
 
 body{
