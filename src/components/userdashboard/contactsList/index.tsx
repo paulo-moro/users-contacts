@@ -1,4 +1,5 @@
 import { IcontactType } from "../../../interface";
+import { useAuth } from "../../../providers/authtoken";
 import { useContacts } from "../../../providers/contacts";
 import { useEditContact } from "../../../providers/editcontact";
 import { useModal } from "../../../providers/modal";
@@ -12,18 +13,23 @@ function ContactList() {
   const { changeModal } = useModal();
   const { changeModalType } = useModalType();
   const { changeEditContact } = useEditContact();
+  const { getAuth } = useAuth();
 
   const handleEdit = (contact: IcontactType) => {
     changeEditContact(contact);
     changeModalType("edit");
     changeModal();
   };
+  const logout = () => {
+    localStorage.clear();
+    getAuth();
+  };
   return (
     <section className="list__container">
       <div className="user_container">
         <section>
           <h2>Welcome {user.name}</h2>
-          <StyledButton>logout</StyledButton>
+          <StyledButton onClick={logout}>logout</StyledButton>
         </section>
         <StyledButton
           onClick={() => {

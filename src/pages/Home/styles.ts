@@ -43,4 +43,28 @@ export const StyledHomePage = styled.main`
       cursor: pointer;
     }
   }
+  @media (min-width: 500px) {
+    justify-content: start;
+
+    button {
+      font-size: 1.5em;
+    }
+    .second_section form {
+      h2 {
+        color: var(--blue1);
+        font-size: 2em;
+      }
+      background-color: var(--gray1);
+      padding: 5%;
+      height: 50%;
+    }
+    span {
+      color: var(--blue1);
+    }
+  }
+  @media (min-width: 800px) {
+    .second_section form {
+      height: 40%;
+    }
+  }
 `;

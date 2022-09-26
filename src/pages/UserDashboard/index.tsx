@@ -7,9 +7,9 @@ import { useUser } from "../../providers/user";
 import { StyledDashBoard } from "./styles";
 
 function UserDashoardPage() {
-  const { getAuth, auth } = useAuth();
+  const { getAuth } = useAuth();
   const { getContacts } = useContacts();
-  const { getUser, user } = useUser();
+  const { getUser } = useUser();
   useEffect(() => {
     getAuth();
     getUser();
@@ -20,7 +20,7 @@ function UserDashoardPage() {
     <StyledDashBoard>
       <ContactList />
 
-      <section>
+      <section className="side-screen">
         <DashboardModal />
       </section>
     </StyledDashBoard>

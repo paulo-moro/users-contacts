@@ -72,7 +72,70 @@ export const StyledDashBoard = styled.main`
           cursor: pointer;
         }
       }
-    
+    }
+  }
+
+  @media (min-width: 500px) {
+    .list__container {
+      ul {
+        height: 60%;
+        width: 80%;
+        gap: 1em;
+      }
+      li {
+        background-color: var(--white);
+        padding: 5%;
+        width: 80%;
+        :first-child {
+          margin-top: 25%;
+        }
+        input {
+          max-width: 25%;
+          width: fit-content;
+          background-color: var(--white);
+          border: none;
+          font-size: 0.8em;
+        }
+        button {
+          background-color: var(--white);
+          border: none;
+          color: var(--blue1);
+          font-size: 1em;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 800px) {
+    .list__container {
+      ul {
+        height: 60%;
+        width: 60%;
+        gap: 1em;
+      }
+      li {
+        background-color: var(--white);
+        padding: 2.5%;
+        width: 85%;
+        :first-child {
+          margin-top: 2.5%;
+        }
+      }
+
+      input {
+        max-width: 40%;
+        width: fit-content;
+        background-color: var(--white);
+
+        font-size: 2em;
+      }
+
+      ul button {
+        background-color: var(--white);
+        border: none;
+        color: var(--blue1);
+        font-size: 1em;
+      }
     }
   }
 `;

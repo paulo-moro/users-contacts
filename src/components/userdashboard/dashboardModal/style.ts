@@ -52,4 +52,24 @@ export const StyledModal = styled.div`
       width: 80%;
     }
   }
+  @media (min-width: 800px) {
+    .modal_first_section {
+      width: 30%;
+    }
+    .modal_second_section {
+      width: 30%;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 40%;
+      gap: 2em;
+      input {
+        font-size: 1.5em;
+      }
+      button {
+        font-size: 1.5em;
+      }
+    }
+  }
 `;
