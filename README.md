@@ -20,8 +20,10 @@ Caso utilize o docker, a porta utilizada no localhost será a 8080, então é ne
 ```
 Api>index.ts
 /* Caso seja executado localmente yarn dev */
+ex:
 const Api = axios.create({ baseURL: "http://localhost:8003" }) ||
 /* Caso seja executado via docker */
+ex:
 const Api = axios.create({ baseURL: "http://localhost:8080" });
 ```
 
