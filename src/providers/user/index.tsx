@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import Api from "../../api";
 import { Ichildrentype } from "../../interface";
 import { useAuth } from "../authtoken";
@@ -28,6 +28,9 @@ export const UserProvider = ({ children }: Ichildrentype) => {
     phone: "",
   });
   const { auth } = useAuth();
+  useEffect(() => {
+    auth && setUser(JSON.parse(localStorage.getItem("@user")!));
+  }, []);
 
   const changeUser = (newUser: User) => setUser({ ...user, ...newUser });
   const getUser = () => {

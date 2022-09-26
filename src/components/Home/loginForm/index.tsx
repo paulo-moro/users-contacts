@@ -6,11 +6,12 @@ import { useModal } from "../../../providers/modal";
 import Api from "../../../api";
 import { useAuth } from "../../../providers/authtoken";
 import { useModalType } from "../../../providers/modalType";
-
+import { StyledButton } from "../../../styles/Button/style";
+import { StyledInput } from "../../../styles/Input/styles";
 function LoginForm() {
-  const { changeModal, modal } = useModal();
-  const { changeAuth, auth } = useAuth();
-  const { changeModalType, modalType } = useModalType();
+  const { changeModal } = useModal();
+  const { changeAuth } = useAuth();
+  const { changeModalType } = useModalType();
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -43,52 +44,54 @@ function LoginForm() {
           return true;
         }
       }
+      return true;
     };
 
     if (errorsIsEmpty()) {
-      Api.post("users/login", { email, password }).then((res) => {
-        localStorage.setItem("@authToken", res.data.token);
-        changeAuth(res.data.token);
-      });
+      Api.post("users/login", { email, password })
+        .then((res) => {
+          localStorage.setItem("@authToken", res.data.token);
+          changeAuth(res.data.token);
+          Api.get("users/", {
+            headers: { Authorization: `Bearer ${res.data.token}` },
+          })
+            .then((res) => {
+              localStorage.setItem("@user", JSON.stringify(res.data));
+            })
+            .catch((err) => console.error(err));
 
-      Api.get("users/", {
-        headers: { Authorization: `Bearer ${auth}` },
-      }).then((res) => {
-        localStorage.setItem("@user", res.data);
-      });
-
-      history.push("/dashboard");
+          history.push("/dashboard");
+        })
+        .catch((err) => console.error(err));
     }
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(handleLogin)}>
-        <input type="email" placeholder="E-mail" {...register("email")} />
+        <h2>Login</h2>
+        <StyledInput type="email" placeholder="E-mail" {...register("email")} />
         {errors.email && <span>{String(errors.email?.message)}</span>}
-        <input
+        <StyledInput
           type="password"
           placeholder="Password"
           required
           {...register("password")}
         />
         {errors.email && <span>{String(errors.password?.message)}</span>}
-        <button type="submit">Login</button>
+        <StyledButton type="submit">Sign in</StyledButton>
+        <p>
+          You do not have an account? click{" "}
+          <span
+            onClick={() => {
+              changeModal();
+              changeModalType("register");
+            }}
+          >
+            here
+          </span>
+        </p>
       </form>
-      <p>
-        You do not have an account? click{" "}
-        <span
-          onClick={() => {
-            console.log(modal);
-            console.log(modalType);
-            console.log(changeModalType);
-            changeModal();
-            changeModalType("register");
-          }}
-        >
-          here
-        </span>
-      </p>
     </>
   );
 }
