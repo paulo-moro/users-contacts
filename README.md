@@ -13,12 +13,6 @@ https://github.com/paulo-moro/user-contacts-back-node
 yarn start
 ```
 
-ou
-
-```
-docker-compose up
-```
-
 ## Ligando à api
 
 Caso utilize o docker, a porta utilizada no localhost será a 8080, então é necessário modificar a porta no arquivo index.ts na API, caso seja utilizado localmente, está configurado a porta 8003.
