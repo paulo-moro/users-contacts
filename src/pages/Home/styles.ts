@@ -34,7 +34,7 @@ export const StyledHomePage = styled.main`
       font-weight: bold;
     }
     span {
-      color: var(--blue4);
+      color: var(--purple2);
     }
     p {
       font-size: 0.7rem;
@@ -59,7 +59,7 @@ export const StyledHomePage = styled.main`
       height: 50%;
     }
     span {
-      color: var(--blue1);
+      color: var(--purple2);
     }
   }
   @media (min-width: 800px) {
