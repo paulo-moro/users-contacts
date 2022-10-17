@@ -67,7 +67,7 @@ function RegisterForm() {
 
     if (errorsIsEmpty()) {
       console.log("aqui");
-
+      console.log(data)
       Api.post("/users", data)
         .then((res) => {
           console.log(res.data);

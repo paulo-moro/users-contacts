@@ -10,4 +10,12 @@ export const StyledButton = styled.button`
   :hover {
     cursor: pointer;
   }
+
+  @media (min-width: 500px) {
+    font-size: 1.5em;
+  }
+
+  @media (min-width: 800px) {
+    font-size: 2em;
+  }
 `;
